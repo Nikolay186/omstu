@@ -1,3 +1,5 @@
+use std::convert::TryInto;
+
 pub fn bubble_sort(mut arr: [u32; 9000]) -> ([u32; 9000], u32, u32)
 {   
     let mut cmp: u32 = 0;
@@ -106,4 +108,52 @@ pub fn insertion_sort(mut arr: [u32; 9000]) -> (Vec<u32>, u32, u32)
         }
     }
     (narr, cmp, ins)
+}
+
+fn part(arr: &mut [u32], low: isize, high: isize) -> (isize, u32, u32)
+{
+    let root = high as usize;
+    let mut i = low - 1;
+    let mut j = high;
+    let mut cmp = 0;
+    let mut swp = 0;
+    loop 
+    {
+        i += 1;
+        cmp += 1;
+        while arr[i as usize] < arr[root] { i += 1; }
+
+        j -= 1;
+        cmp += 1;
+        while j >= 0 && arr[j as usize] > arr[root] { j -= 1; }
+
+        if i >= j { break; }
+        else { 
+            swp += 1;
+            arr.swap(i as usize, j as usize); 
+        }
+    }
+    arr.swap(i as usize, root);
+    (i, cmp, swp)
+}
+
+fn q_sort(arr: &mut [u32; 9000], low: isize, high: isize) -> ([u32; 9000], u32, u32)
+{
+    let mut cmp = 0;
+    let mut swp = 0;
+    if low < high
+    {
+        let (p, c, s) = part(arr, low, high);
+        cmp += c;
+        swp += s;
+        q_sort(arr, low, p - 1);
+        q_sort(arr, p + 1, high);
+    }
+    (*arr, cmp, swp)
+}
+
+pub fn quick_sort(arr: &mut [u32; 9000]) -> ([u32; 9000], u32, u32)
+{
+    let l: isize = arr.len().try_into().unwrap();
+    q_sort(arr, 0, l - 1)
 }

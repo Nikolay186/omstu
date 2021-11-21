@@ -38,6 +38,12 @@ fn main() {
     end = start.elapsed();
     // print_array(&insertionSortedArray, end);
     println!("Insertion sort. Time elapsed: {:?}. Compared {c} times. Inserted {s} times.\nQuality(c\\n): {q1}. Quality(m\\n): {q2}\n", end, c = cmp, s = ins, q1 = cmp/9000, q2 = ins/9000);
+
+    start = Instant::now();
+    let (quickSortedArray, cmp, swp) = sorter::quick_sort(&mut sourceArray);
+    end = start.elapsed();
+    // print_array(&quickSortedArray, end);
+    println!("Quick sort. Time elapsed: {:?}. Compared {c} times. Swapped {s} times.\nQuality(c\\n): {q1}. Quality(m\\n): {q2}\n", end, c = cmp, s = swp, q1 = cmp/9000, q2 = swp/9000);
 }
 
 fn generate_sample() -> [u32; 9000]
