@@ -1,10 +1,9 @@
 USE master;
-
 GO
-IF DB_ID('Insurance') IS NOT NULL
-	DROP DATABASE Insurance;
 
+IF DB_ID('Insurance') IS NOT NULL DROP DATABASE Insurance;
 GO
+
 CREATE DATABASE Insurance
 ON PRIMARY (NAME = Insurance, FILENAME = 'G:\DBM\Insurance.mdf', SIZE = 5MB, 
 			MAXSIZE = 1GB, FILEGROWTH = 1MB)
